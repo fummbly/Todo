@@ -3,6 +3,7 @@ class Task {
         this.title = title;
         this.desc = desc;
         this.duedate = duedate
+        this.done = false;
     }
 
     get title() {
@@ -27,6 +28,10 @@ class Task {
 
     set duedate(value) {
         this._duedate = value
+    }
+
+    changeDone() {
+        this.done = !this.done
     }
 }
 

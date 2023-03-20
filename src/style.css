@@ -8,6 +8,24 @@
     margin: 0;
 }
 
+body {
+    display: flex;
+    overflow: hidden;
+}
+
+#content {
+    width: 100%;
+}
+
+#sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: white;
+    height: 100%;
+    padding: 1rem;
+}
+
 
 .projectContent {
     display: flex;
@@ -23,11 +41,16 @@
     display: none;
 }
 
+.dots {
+    height: 2.5rem;
+    cursor: pointer;
+}
+
 .project {
     background-image: url("https://images.unsplash.com/photo-1620207418302-439b387441b0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=967&q=80");
     background-position: center;
     background-size: cover;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     overflow: hidden;
 }
@@ -68,6 +91,7 @@
     border-radius: .5rem;
     padding: .5rem 1rem;
     margin: 1rem auto;
+    transition: background-color 0.25s, border-color 0.25s;
 }
 
 .taskDate {
@@ -114,6 +138,9 @@
 }
 
 .projectTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin: 1rem;
     box-shadow: 5px 5px 20px rgba(0,0,0,0.25);
     padding: 1rem 2rem;
@@ -122,4 +149,28 @@
 
 .todoDiv {
     display: flex;
+}
+
+.done {
+    background-color: lightgreen;
+    border-color: mediumseagreen;
+}
+
+#prodjEdit {
+    position: absolute;
+    right: 2rem;
+    top: 6rem;
+    background-color: white;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    text-align: center;
+}
+#prodjEdit > * {
+    padding: 1rem .5rem;
+    cursor: pointer;
+    border-radius: .5rem;
+}
+
+#prodjEdit > *:hover {
+    background-color: lightblue;
 }

@@ -1,13 +1,14 @@
-const content = document.getElementById('content')
+
 import './style.css'
 
-import Task from "./logic/task";
-import Todo from "./logic/todo";
+import App from './logic/app'
 import Project from './logic/project';
 import UI from "./ui";
 
-const ui = new UI()
-const testProject = new Project("Test Project")
+const app = new App()
+const ui = new UI(app)
 
-ui.renderProject(testProject)
+app.addProject(new Project("Test Project"))
+
+ui.renderSidebar()
 
