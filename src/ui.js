@@ -6,6 +6,10 @@ class UI {
     constructor(app) {
         this.content = document.getElementById('content')
         this.sidebar = document.getElementById('sidebar')
+        this.menu = document.getElementById('menu')
+        this.menu.addEventListener('click', () => {
+            this.sidebar.style.display = 'block'
+        })
         this.app = app
     }
 
