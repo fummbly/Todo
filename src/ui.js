@@ -8,7 +8,7 @@ class UI {
         this.sidebar = document.getElementById('sidebar')
         this.menu = document.getElementById('menu')
         this.menu.addEventListener('click', () => {
-            this.sidebar.style.display = 'block'
+            this.sidebar.classList.add('show')
         })
         this.app = app
     }
@@ -139,9 +139,19 @@ class UI {
 
     renderSidebar() {
         this.sidebar.innerHTML = ''
+        const titleDiv = document.createElement("div")
+        titleDiv.classList.add('buttonContainer')
         const sidebarTitle = document.createElement('h1')
         sidebarTitle.textContent = 'Your Projects'
-        this.sidebar.appendChild(sidebarTitle)
+        titleDiv.appendChild(sidebarTitle)
+        const closeBtn = document.createElement('img')
+        closeBtn.src = "../images/close.png"
+        closeBtn.classList.add('icon')
+        closeBtn.addEventListener('click', () => {
+            this.sidebar.classList.remove('show')
+        })
+        titleDiv.appendChild(closeBtn)
+        this.sidebar.appendChild(titleDiv)
         const projectDiv = document.createElement('div')
         projectDiv.id = 'projectDiv'
         this.sidebar.appendChild(this.renderSidebarProjects(projectDiv))
