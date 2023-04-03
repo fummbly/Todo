@@ -6,28 +6,28 @@ class Task {
         this.done = false;
     }
 
-    get title() {
-        return this._title;
+    getTitle() {
+        return this.title;
     }
 
-    set title(value) {
-        this._title = value
+    setTitle(value) {
+        this.title = value
     }
 
-    get desc() {
-        return this._desc;
+    getDesc() {
+        return this.desc;
     }
 
-    set desc(value) {
-        this._desc = value
+    setDesc(value) {
+        this.desc = value
     }
 
-    get duedate() {
-        return this._duedate
+    getDueDate() {
+        return this.duedate
     }
 
-    set duedate(value) {
-        this._duedate = value
+    setDueDate(value) {
+        this.duedate = value
     }
 
     changeDone() {

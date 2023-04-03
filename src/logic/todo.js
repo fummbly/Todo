@@ -6,16 +6,23 @@ class Todo {
         this.tasks = []
     }
     
-    get title() {
-        return this._title;
+    getTitle() {
+        return this.title;
     }
 
-    set title(value) {
-        this._title = value
+    setTitle(value) {
+        this.title = value
     }
 
     addTask(task) {
         this.tasks.push(task)
+    }
+
+    getTasks() {
+        return this.tasks
+    }
+    setTasks(tasks) {
+        this.tasks = tasks
     }
 }
 

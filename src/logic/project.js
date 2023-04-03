@@ -4,17 +4,33 @@ class Project {
         this.todos = []
     }
 
-    get title() {
-        return this._title;
+    getTitle() {
+        return this.title
     }
 
-    set title(value) {
-        this._title = value;
+    setTitle(title) {
+        this.title = title
     }
 
 
-    addTodo(todo) {
-        this.todos.push(todo)
+    addTodo(newTodo) {
+        if(this.todos.find((todo) => todo.getTitle() === newTodo.getTitle())) {
+            return
+        }
+
+        this.todos.push(newTodo)
+    }
+
+    getTodo(todoName) {
+        return this.todos.find((todo) => todo.getTitle() === todoName)
+    }
+
+    getTodos() {
+        return this.todos
+    }
+
+    setTodos(todos) {
+        this.todos = todos
     }
 }
 

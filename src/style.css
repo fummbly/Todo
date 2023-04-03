@@ -13,6 +13,15 @@ body {
     flex-direction: column;
     overflow: hidden;
 }
+
+#overlay {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    display: none;
+}
+
 #titleBar {
     padding: 1rem;
 }
@@ -40,10 +49,22 @@ body {
     width: 100%;
     text-align: center;
     transition: transform .5s;
+    z-index: 3;
 }
 
 #sidebar > * {
     margin: 1rem;
+    
+}
+
+#projectDiv > * {
+    padding: .5rem 0;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+#projectDiv > *:hover {
+    background-color: lightblue;
 }
 
 
@@ -140,7 +161,7 @@ body {
     border-radius: .5rem;
     background-color: white;
     transform: translate(-7rem, 0);
-    z-index: 2;
+    z-index: 3;
 }
 
 .popup > input, .popup > h2 {
@@ -184,6 +205,7 @@ body {
     padding: .5rem 1rem;
     border-radius: .5rem;
     text-align: center;
+    z-index: 3;
 }
 #prodjEdit > * {
     padding: 1rem .5rem;

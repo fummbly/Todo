@@ -1,19 +1,25 @@
 import Task from "./logic/task"
 import Todo from "./logic/todo"
 import Project from "./logic/project"
+import Storage from "./logic/storage"
 
 class UI {
-    constructor(app) {
+    constructor() {
         this.content = document.getElementById('content')
         this.sidebar = document.getElementById('sidebar')
         this.menu = document.getElementById('menu')
-        this.menu.addEventListener('click', () => {
+        this.menu.onclick = () => {
             this.sidebar.classList.add('show')
-        })
-        this.app = app
+            const overlay = document.getElementById('overlay')
+            overlay.style.display = "block"
+            overlay.addEventListener('click', () => {
+                this.sidebar.classList.remove('show')
+                overlay.style.display = "none"
+            })
+        }
     }
 
-    renderTodo(todo) {
+    renderTodo(projectTitle, todo) {
         const todoDiv = document.createElement('div')
         todoDiv.classList.add('todo')
         const todoTitle = document.createElement('h2')
@@ -26,21 +32,13 @@ class UI {
         addTaskBtn.innerHTML = "Add Task"
         addTaskBtn.classList.add('addTask')
         addTaskBtn.addEventListener('click', () => {
-            this.addTaskPop(todo, taskHolderDiv)
+            this.addTaskPop(projectTitle, todo.getTitle(), taskHolderDiv)
         })
 
-        console.log(todo.tasks)
 
         todoDiv.appendChild(addTaskBtn)
 
         return todoDiv
-    }
-
-    renderTodos(todos, parent) {
-        parent.textContent = ''
-        for(let todo of todos) {
-            parent.appendChild(this.renderTodo(todo))
-        }
     }
 
     renderTask(task) {
@@ -105,13 +103,13 @@ class UI {
         projectContent.classList.add('projectContent')
         const todoDiv = document.createElement('div')
         todoDiv.classList.add('todoDiv')
-        this.renderTodos(project.todos, todoDiv)
+        project.getTodos().forEach((todo) => todoDiv.appendChild(this.renderTodo(project.getTitle(),todo)))
         projectContent.appendChild(todoDiv)
         const addTodoBtn = document.createElement('button')
         addTodoBtn.classList.add('addTodo')
         addTodoBtn.innerHTML = 'Add Todo'
         addTodoBtn.addEventListener('click', () => {
-            this.addTodoPop(project, todoDiv)
+            this.addTodoPop(project.getTitle(), todoDiv)
         })
         projectContent.addEventListener('wheel', (e) => {
             e.preventDefault()
@@ -125,19 +123,20 @@ class UI {
 
     renderSidebarProjects(parent) {
         parent.textContent = ""
-        for(let project of this.app.projects) {
-            const projectTitle = document.createElement('p')
+        Storage.getApp().getProjects().forEach((project) =>  {
+            const projectTitle = document.createElement('h2')
             projectTitle.textContent = project.title
             projectTitle.addEventListener('click', () => {
                 this.content.innerHTML = ''
-                this.renderProject(project)
+                this.renderProject(Storage.getApp().getProject(project.getTitle()))
             })
             parent.appendChild(projectTitle)
-        }
+        })
         return parent
     }
 
     renderSidebar() {
+        const overlay = document.getElementById('overlay')
         this.sidebar.innerHTML = ''
         const titleDiv = document.createElement("div")
         titleDiv.classList.add('buttonContainer')
@@ -149,6 +148,7 @@ class UI {
         closeBtn.classList.add('icon')
         closeBtn.addEventListener('click', () => {
             this.sidebar.classList.remove('show')
+            overlay.style.display = 'none'
         })
         titleDiv.appendChild(closeBtn)
         this.sidebar.appendChild(titleDiv)
@@ -168,6 +168,12 @@ class UI {
     }
 
     addProjPop() {
+        const overlay = document.getElementById('overlay')
+        overlay.style.display = "block"
+        overlay.addEventListener('click', () => {
+            popup.remove()
+            overlay.style.display = "none"
+        })
         const popup = document.createElement('form')
         popup.classList.add('popup')
         popup.id = 'addProjectPopup'
@@ -184,12 +190,12 @@ class UI {
             e.preventDefault()
             if(projTitleInput.value !== "") {
                 const newProj = new Project(projTitleInput.value)
-                this.app.addProject(newProj)
-                this.renderSidebar(this.app)
+                Storage.addProject(newProj)
+                this.renderSidebar()
                 this.renderProject(newProj)
 
             }
-
+            overlay.style.display = "none"
             popup.remove()
         })
 
@@ -198,7 +204,13 @@ class UI {
         this.content.appendChild(popup)
     }
 
-    addTaskPop(todo, taskDiv) {
+    addTaskPop(projectTitle, todoTitle, taskDiv) {
+        const overlay = document.getElementById('overlay')
+        overlay.style.display = "block"
+        overlay.addEventListener('click', () => {
+            popup.remove()
+            overlay.style.display = "none"
+        })
         const popup = document.createElement('form')
         popup.classList.add('popup')
         popup.id = "addTaskPopup"
@@ -236,10 +248,11 @@ class UI {
         addBtn.addEventListener('click', (e) => {
             e.preventDefault()
             if(titleInput.value !== "") {
-                todo.addTask(new Task(titleInput.value, descInput.value, dateInput.value))
-                this.renderTasks(todo.tasks, taskDiv)
+                Storage.addTask(projectTitle, todoTitle, new Task(titleInput.value, descInput.value, dateInput.value))
+                this.renderProject(Storage.getApp().getProject(projectTitle))
 
             }
+            overlay.style.display = 'none'
             popup.remove()
         })
         buttonDiv.appendChild(addBtn)
@@ -247,6 +260,7 @@ class UI {
         canBtn.innerHTML = 'Cancel'
         canBtn.addEventListener('click', () => {
             popup.remove()
+            overlay.style.display = 'none'
         })
         buttonDiv.appendChild(canBtn)
         popup.appendChild(buttonDiv)
@@ -257,7 +271,13 @@ class UI {
 
     }
 
-    addTodoPop(project, todoDiv) {
+    addTodoPop(projectTitle, todoDiv) {
+        const overlay = document.getElementById('overlay')
+        overlay.style.display = "block"
+        overlay.addEventListener('click', () => {
+            popup.remove()
+            overlay.style.display = "none"
+        })
         const popup = document.createElement('form')
         popup.classList.add('popup')
         popup.id = 'addTodoPop'
@@ -286,16 +306,18 @@ class UI {
             e.preventDefault()
             if(titleInput.value !== "")
             {
-                project.addTodo(new Todo(titleInput.value))
-                this.renderTodos(project.todos, todoDiv)
+                Storage.addTodo(projectTitle, new Todo(titleInput.value))
+                this.renderProject(Storage.getApp().getProject(projectTitle))
                 
             }
+            overlay.style.display = 'none'
             popup.remove()
         })
         buttonDiv.appendChild(addBtn)
         const canBtn = document.createElement('button')
         canBtn.innerHTML = 'Cancel'
         canBtn.addEventListener('click', () =>  {
+            overlay.style.display = 'none'
             popup.remove()
         })
 
@@ -307,6 +329,12 @@ class UI {
     }   
 
     projectEditPop(project) {
+        const overlay = document.getElementById('overlay')
+        overlay.style.display = "block"
+        overlay.addEventListener('click', () => {
+            popup.remove()
+            overlay.style.display = "none"
+        })
         const popup = document.createElement('div')
         popup.id = 'prodjEdit'
         const rename = document.createElement("h2")
@@ -319,6 +347,7 @@ class UI {
         const deleteProject = document.createElement('h2')
         deleteProject.textContent = "Delete Project"
         deleteProject.addEventListener('click', () => {
+            overlay.style.display = 'none'
             popup.remove()
         })
         popup.appendChild(deleteProject)
@@ -326,6 +355,7 @@ class UI {
         const canBtn = document.createElement('h2')
         canBtn.textContent = "Cancel"
         canBtn.addEventListener('click', () => {
+            overlay.style.display = 'none'
             popup.remove()
         })
 
@@ -333,9 +363,15 @@ class UI {
 
 
         this.content.appendChild(popup)
-    }
+    }s
 
     renameProject(project) {
+        const overlay = document.getElementById('overlay')
+        overlay.style.display = "block"
+        overlay.addEventListener('click', () => {
+            popup.remove()
+            overlay.style.display = "none"
+        })
         const popup = document.createElement('form')
         popup.classList.add('popup')
         const title = document.createElement('h2')
@@ -352,10 +388,11 @@ class UI {
             e.preventDefault()
             if(titleInput.value !== "") {
                 this.content.innerHTML = ""
-                project.title = titleInput.value
-                this.renderProject(project)
+                Storage.renameProject(project.getTitle(), titleInput.value)
+                this.renderProject(Storage.getApp().getProject(titleInput.value))
                 this.renderSidebar()
             }
+            overlay.style.display = 'none'
             popup.remove()
         })
 
