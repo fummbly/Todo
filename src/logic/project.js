@@ -32,6 +32,14 @@ class Project {
     setTodos(todos) {
         this.todos = todos
     }
+
+    deleteTodo(todoName) {
+        const todoToDelete = this.todos.find((todo) => todo.getTitle() === todoName)
+
+        this.todos.splice(this.todos.indexOf(todoToDelete), 1)
+    }
+
+    delete
 }
 
 export default Project

@@ -26,7 +26,7 @@ class UI {
         todoTitle.textContent  = todo.title;
         todoDiv.appendChild(todoTitle)
         const taskHolderDiv = document.createElement('div')
-        this.renderTasks(todo.tasks, taskHolderDiv)
+        this.renderTasks(projectTitle, todo.getTitle(), todo.tasks, taskHolderDiv)
         todoDiv.appendChild(taskHolderDiv)
         const addTaskBtn = document.createElement('button')
         addTaskBtn.innerHTML = "Add Task"
@@ -38,18 +38,27 @@ class UI {
 
         todoDiv.appendChild(addTaskBtn)
 
+        const removeBtn = document.createElement('button')
+        removeBtn.innerHTML = 'Remove Done Tasks'
+        removeBtn.addEventListener('click', () => {
+            Storage.deleteTask(projectTitle, todo.getTitle())
+            this.renderProject(Storage.getApp().getProject(projectTitle))
+        })
+
+        todoDiv.appendChild(removeBtn)
+
         return todoDiv
     }
 
-    renderTask(task) {
+    renderTask(projectTitle, todoTitle, task) {
         const taskDiv = document.createElement('div')
         taskDiv.classList.add('task')
         const taskTitle = document.createElement('p')
         taskTitle.textContent = task.title
         taskDiv.appendChild(taskTitle)
         taskDiv.addEventListener('click', () => {
-            task.changeDone()
-            taskDiv.classList.toggle("done")
+            Storage.changeDone(projectTitle, todoTitle, task.getTitle())
+            this.renderProject(Storage.getApp().getProject(projectTitle))
         })
 
         if(task.done) {
@@ -57,7 +66,7 @@ class UI {
         }
 
         if(task.desc !== "") {
-            const taskDesc = document.createElement('p')
+            const taskDesc = document.createElement("p")
             taskDesc.textContent = task.desc
             taskDiv.appendChild(taskDesc)
         }
@@ -75,10 +84,10 @@ class UI {
         return taskDiv
     }
 
-    renderTasks(tasks, parent) {
+    renderTasks(projectTitle, todoTitle, tasks, parent) {
         parent.textContent = ""
         for(let task of tasks) {
-            parent.appendChild(this.renderTask(task))
+            parent.appendChild(this.renderTask(projectTitle, todoTitle, task))
         }
     }
 

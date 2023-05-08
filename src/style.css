@@ -12,6 +12,8 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    box-sizing: border-box;
+
 }
 
 #overlay {
@@ -103,14 +105,34 @@ body {
 .todo {
     flex: 0 0 auto;
     display: flex;
+    flex-wrap: nowrap;
     flex-direction: column;
     justify-content: space-between;
     box-shadow: 5px 5px 20px rgba(0,0,0,0.25);
     border-radius: .5rem;
     width: 20rem;
+    max-height: 80%;
     padding: 1rem;
     margin: 1rem;
     align-self: self-start;
+    overflow-y: auto;
+
+    -ms-overflow-style: none;
+    scrollbar-width: 2px;
+}
+
+.todo::-webkit-scrollbar {
+    width: 10px;
+}
+
+.todo::-webkit-scrollbar-track {
+    background-color: #121212;
+    border-radius: .5rem;
+}
+
+.todo::-webkit-scrollbar-thumb {
+    background-color: #eee;
+    border-radius: .5rem;
 }
 
 .addTodo {

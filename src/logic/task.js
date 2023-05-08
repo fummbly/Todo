@@ -30,6 +30,8 @@ class Task {
         this.duedate = value
     }
 
+    
+
     changeDone() {
         this.done = !this.done
     }

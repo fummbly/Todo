@@ -22,6 +22,24 @@ class App {
         this.projects = projects
     }
 
+    deleteProject(projectName) {
+        const projectToDelete = this.getProject(projectName)
+
+        this.projects.splice(this.projects.indexOf(projectToDelete), 1)
+    }
+
+    deleteTodo(projectName, todoName) {
+        const project = this.getProject(projectName)
+
+        project.deleteTodo(todoName)
+    }
+
+    deleteTasks(projectName, todoName) {
+        const todo = this.getProject(projectName).getTodo(todoName)
+
+        todo.deleteTasks()
+    }
+
 
 }
 

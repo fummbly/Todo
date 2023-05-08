@@ -18,11 +18,24 @@ class Todo {
         this.tasks.push(task)
     }
 
+    getTask(taskTitle) {
+       return this.tasks.find((task) => task.getTitle() === taskTitle)
+
+    }
+
     getTasks() {
         return this.tasks
     }
     setTasks(tasks) {
         this.tasks = tasks
+    }
+
+    deleteTasks() {
+        this.tasks.forEach((task) => {
+            if(task.done) {
+                this.tasks.splice(this.tasks.indexOf(task), 1)
+            }
+        })
     }
 }
 

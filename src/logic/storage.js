@@ -61,6 +61,31 @@ class Storage {
         Storage.saveApp(app)
     }
 
+    static changeDone(projectName, todoName, taskName) {
+        const app = Storage.getApp()
+        app.getProject(projectName).getTodo(todoName).getTask(taskName).changeDone()
+        Storage.saveApp(app)
+    }
+
+    static deleteProject(projectName) {
+        const app = Storage.getApp()
+        app.deleteProject(projectName)
+        Storage.saveApp(app)
+    }
+    
+
+    static deleteTodo(projectName, todoName) {
+        const app = Storage.getApp()
+        app.deleteTodo(projectName, todoName)
+        Storage.saveApp(app)
+    }
+
+    static deleteTask(projectName, todoName) {
+        const app = Storage.getApp()
+        app.deleteTasks(projectName, todoName)
+        Storage.saveApp(app)
+    }
+
 
 }
 
