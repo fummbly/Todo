@@ -22,15 +22,23 @@ class UI {
     renderTodo(projectTitle, todo) {
         const todoDiv = document.createElement('div')
         todoDiv.classList.add('todo')
+        const todoTitleDiv = document.createElement("div")
+        todoTitleDiv.classList.add('buttonContainer')
         const todoTitle = document.createElement('h2')
         todoTitle.textContent  = todo.title;
-        todoDiv.appendChild(todoTitle)
+        todoTitleDiv.appendChild(todoTitle)
+        const todoDelete = document.createElement('img')
+        todoDelete.classList.add('icon')
+        todoDelete.classList.add('sml')
+        todoDelete.src = '../images/close.png'
+        todoTitleDiv.appendChild(todoDelete)
+        todoDiv.appendChild(todoTitleDiv)
         const taskHolderDiv = document.createElement('div')
         this.renderTasks(projectTitle, todo.getTitle(), todo.tasks, taskHolderDiv)
         todoDiv.appendChild(taskHolderDiv)
         const addTaskBtn = document.createElement('button')
         addTaskBtn.innerHTML = "Add Task"
-        addTaskBtn.classList.add('addTask')
+        addTaskBtn.classList.add('btn')
         addTaskBtn.addEventListener('click', () => {
             this.addTaskPop(projectTitle, todo.getTitle(), taskHolderDiv)
         })
@@ -40,6 +48,8 @@ class UI {
 
         const removeBtn = document.createElement('button')
         removeBtn.innerHTML = 'Remove Done Tasks'
+        removeBtn.classList.add('btn')
+        removeBtn.classList.add('red')
         removeBtn.addEventListener('click', () => {
             Storage.deleteTask(projectTitle, todo.getTitle())
             this.renderProject(Storage.getApp().getProject(projectTitle))

@@ -36,6 +36,11 @@ body {
 
 .icon {
     height: 2rem;
+    cursor: pointer;
+}
+
+.sml {
+    height: 1rem;
 }
 
 #content {
@@ -162,13 +167,14 @@ body {
     color: grey;
 }
 
-.addTask {
+.btn {
     margin-top: 1rem;
     border: 2px solid gainsboro;
     background-color: inherit;
     border-radius: .5rem;
     padding: .5rem 1rem;
     cursor: pointer;
+    font-weight: bolder;
 }
 
 .popup {
@@ -217,6 +223,11 @@ body {
 .done {
     background-color: lightgreen;
     border-color: mediumseagreen;
+}
+
+.red {
+    background-color: lightcoral;
+    border-color: maroon;
 }
 
 #prodjEdit {
