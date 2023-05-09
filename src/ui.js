@@ -2,12 +2,17 @@ import Task from "./logic/task"
 import Todo from "./logic/todo"
 import Project from "./logic/project"
 import Storage from "./logic/storage"
+import Close from './close.png'
+import Dots from './dots.png'
+import Menu from './menu.png'
+
 
 class UI {
     constructor() {
         this.content = document.getElementById('content')
         this.sidebar = document.getElementById('sidebar')
         this.menu = document.getElementById('menu')
+        this.menu.src = Menu
         this.menu.onclick = () => {
             this.sidebar.classList.add('show')
             const overlay = document.getElementById('overlay')
@@ -30,7 +35,7 @@ class UI {
         const todoDelete = document.createElement('img')
         todoDelete.classList.add('icon')
         todoDelete.classList.add('sml')
-        todoDelete.src = '../images/close.png'
+        todoDelete.src = Close
         todoTitleDiv.appendChild(todoDelete)
         todoDiv.appendChild(todoTitleDiv)
         const taskHolderDiv = document.createElement('div')
@@ -112,7 +117,7 @@ class UI {
         projectTitleDiv.appendChild(projectTitle)
         const threedot = document.createElement('img')
         threedot.classList.add('dots')
-        threedot.src = "../images/dots.png"
+        threedot.src = Dots
         threedot.addEventListener('click', () => {
             this.projectEditPop(project)
         })
@@ -163,7 +168,7 @@ class UI {
         sidebarTitle.textContent = 'Your Projects'
         titleDiv.appendChild(sidebarTitle)
         const closeBtn = document.createElement('img')
-        closeBtn.src = "../images/close.png"
+        closeBtn.src = Close
         closeBtn.classList.add('icon')
         closeBtn.addEventListener('click', () => {
             this.sidebar.classList.remove('show')
