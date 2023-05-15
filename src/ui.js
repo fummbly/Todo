@@ -22,6 +22,10 @@ class UI {
                 overlay.style.display = "none"
             })
         }
+
+        if(Storage.getApp().getProjects().length > 0) {
+            this.renderProject(Storage.getApp().getFirstProject())
+        }
     }
 
     renderTodo(projectTitle, todo) {
@@ -36,6 +40,10 @@ class UI {
         todoDelete.classList.add('icon')
         todoDelete.classList.add('sml')
         todoDelete.src = Close
+        todoDelete.addEventListener('click', () => {
+            Storage.deleteTodo(projectTitle, todo.title)
+            this.renderProject(Storage.getApp().getProject(projectTitle))
+        })
         todoTitleDiv.appendChild(todoDelete)
         todoDiv.appendChild(todoTitleDiv)
         const taskHolderDiv = document.createElement('div')
@@ -152,6 +160,7 @@ class UI {
             projectTitle.textContent = project.title
             projectTitle.addEventListener('click', () => {
                 this.content.innerHTML = ''
+                this.sidebar.classList.remove('show')
                 this.renderProject(Storage.getApp().getProject(project.getTitle()))
             })
             parent.appendChild(projectTitle)
@@ -181,6 +190,7 @@ class UI {
         this.sidebar.appendChild(this.renderSidebarProjects(projectDiv))
 
         const addProject = document.createElement('button')
+        addProject.classList.add('btn')
         addProject.innerHTML = "Add Project"
         addProject.addEventListener('click', () => {
             this.addProjPop(this.app)
@@ -220,6 +230,7 @@ class UI {
 
             }
             overlay.style.display = "none"
+            this.sidebar.classList.remove('show')
             popup.remove()
         })
 
@@ -372,6 +383,9 @@ class UI {
         deleteProject.textContent = "Delete Project"
         deleteProject.addEventListener('click', () => {
             overlay.style.display = 'none'
+            Storage.deleteProject(project.title)
+            this.renderSidebar()
+            this.renderProject(Storage.getApp().getFirstProject())
             popup.remove()
         })
         popup.appendChild(deleteProject)

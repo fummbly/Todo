@@ -14,6 +14,10 @@ class App {
         return this.projects.find((project) => project.getTitle() === projectName)
     }
 
+    getFirstProject() {
+        return this.projects[0]
+    }
+
     getProjects() {
         return this.projects
     }
