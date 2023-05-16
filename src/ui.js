@@ -117,10 +117,12 @@ class UI {
     renderProject(project) {
         this.content.innerHTML = ""
         const projectDiv = document.createElement('div')
+        projectDiv.style.backgroundColor = `hsl(${project.getColor()}, 40%, 40%)`
         projectDiv.classList.add('project')
         const projectTitleDiv = document.createElement('div')
         projectTitleDiv.classList.add('projectTitle')
         const projectTitle = document.createElement('h1')
+        projectTitle.style.color = `hsl(${project.getColor()}, 40%, 30%)`
         projectTitle.textContent = project.title
         projectTitleDiv.appendChild(projectTitle)
         const threedot = document.createElement('img')
@@ -379,6 +381,13 @@ class UI {
             popup.remove()
         })
         popup.appendChild(rename)
+        const changeColor = document.createElement('h2')
+        changeColor.textContent = "Change Color"
+        changeColor.addEventListener('click', () => {
+            this.changeColorPop(project)
+            popup.remove()
+        })
+        popup.appendChild(changeColor)
         const deleteProject = document.createElement('h2')
         deleteProject.textContent = "Delete Project"
         deleteProject.addEventListener('click', () => {
@@ -401,7 +410,70 @@ class UI {
 
 
         this.content.appendChild(popup)
-    }s
+    }
+
+
+    changeColorPop(project) {
+        const overlay = document.getElementById('overlay')
+        overlay.style.display = "block"
+        overlay.addEventListener('click', () => {
+            popup.remove()
+            overlay.style.display = 'none'
+        })
+
+        const popup = document.createElement('div')
+        popup.classList.add('popup')
+        popup.style.width = "auto"
+        const title = document.createElement('h2')
+        title.textContent = "Change Color"
+        popup.appendChild(title)
+
+        const btnDiv = document.createElement('div')
+        btnDiv.classList.add('buttonContainer')
+        const blueBtn = document.createElement('button');
+        blueBtn.classList.add('round')
+        blueBtn.style.backgroundColor = `hsl(200, 40%, 40%)`
+        blueBtn.addEventListener('click', () => {
+           Storage.changeProjectColor(project.title, 200)
+           this.renderProject(Storage.getApp().getProject(project.title))
+           popup.remove()
+        })
+        btnDiv.appendChild(blueBtn)
+
+        const redBtn = document.createElement('button')
+        redBtn.classList.add('round')
+        redBtn.style.backgroundColor = `hsl(0, 40%, 40%)`
+        redBtn.addEventListener('click', () => {
+            Storage.changeProjectColor(project.title, 0)
+            this.renderProject(Storage.getApp().getProject(project.title))
+        })
+        btnDiv.appendChild(redBtn)
+
+
+        const greenBtn = document.createElement('button')
+        greenBtn.classList.add('round')
+        greenBtn.style.backgroundColor = `hsl(500, 40%, 40%)`
+        greenBtn.addEventListener('click', () => {
+            Storage.changeProjectColor(project.title, 500)
+            this.renderProject(Storage.getApp().getProject(project.title))
+        })
+        btnDiv.appendChild(greenBtn)
+
+        const purpBtn = document.createElement('button')
+        purpBtn.classList.add('round')
+        purpBtn.style.backgroundColor = `hsl(260, 40%, 40%)`
+        purpBtn.addEventListener('click', () => {
+            Storage.changeProjectColor(project.title, 260)
+            this.renderProject(Storage.getApp().getProject(project.title))
+        })
+        btnDiv.appendChild(purpBtn)
+
+        popup.appendChild(btnDiv)
+
+
+        this.content.appendChild(popup)
+
+    }
 
     renameProject(project) {
         const overlay = document.getElementById('overlay')

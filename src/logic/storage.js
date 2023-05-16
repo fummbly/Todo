@@ -49,6 +49,12 @@ class Storage {
         Storage.saveApp(app)
     }
 
+    static changeProjectColor(projectName, color) {
+        const app = Storage.getApp()
+        app.getProject(projectName).setColor(color)
+        Storage.saveApp(app)
+    }
+
     static renameTodo(projectName, todoName, newTodoName) {
         const app = Storage.getApp()
         app.getProject(projectName).getTodo(todoName).setTitle(newTodoName)

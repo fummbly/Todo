@@ -1,6 +1,7 @@
 class Project {
     constructor(title) {
         this.title = title;
+        this.color = 200;
         this.todos = []
     }
 
@@ -39,7 +40,13 @@ class Project {
         this.todos.splice(this.todos.indexOf(todoToDelete), 1)
     }
 
-    delete
+    getColor() {
+        return this.color
+    }
+
+    setColor(value) {
+        this.color = value
+    }
 }
 
 export default Project
