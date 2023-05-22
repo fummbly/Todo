@@ -3,7 +3,7 @@ import Todo from "./logic/todo"
 import Project from "./logic/project"
 import Storage from "./logic/storage"
 import Close from './close.png'
-import Dots from './dots.png'
+import Dots from './dots-3-vertical-svgrepo-com.svg'
 import Menu from './menu.png'
 
 
@@ -117,17 +117,23 @@ class UI {
     renderProject(project) {
         this.content.innerHTML = ""
         const projectDiv = document.createElement('div')
-        projectDiv.style.backgroundColor = `hsl(${project.getColor()}, 40%, 40%)`
         projectDiv.classList.add('project')
+        projectDiv.style.backgroundColor = `hsl(${project.getColor()}, 50%, 80%)`
         const projectTitleDiv = document.createElement('div')
         projectTitleDiv.classList.add('projectTitle')
+        projectTitleDiv.style.backgroundColor = `hsl(${project.getColor()}, 50%, 60%)`
         const projectTitle = document.createElement('h1')
-        projectTitle.style.color = `hsl(${project.getColor()}, 40%, 30%)`
+        //projectTitle.style.color = `hsl(${project.getColor()}, 500%, 60%)`
         projectTitle.textContent = project.title
         projectTitleDiv.appendChild(projectTitle)
-        const threedot = document.createElement('img')
+        const threedot = document.createElement('div')
+        threedot.innerHTML = `<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+        <svg width="auto" height="auto" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 5C14 6.10457 13.1046 7 12 7C10.8954 7 10 6.10457 10 5C10 3.89543 10.8954 3 12 3C13.1046 3 14 3.89543 14 5Z" fill="#fff"/>
+        <path d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z" fill="#fff"/>
+        <path d="M12 21C13.1046 21 14 20.1046 14 19C14 17.8954 13.1046 17 12 17C10.8954 17 10 17.8954 10 19C10 20.1046 10.8954 21 12 21Z" fill="#fff"/>
+        </svg>`
         threedot.classList.add('dots')
-        threedot.src = Dots
         threedot.addEventListener('click', () => {
             this.projectEditPop(project)
         })
@@ -142,6 +148,8 @@ class UI {
         const addTodoBtn = document.createElement('button')
         addTodoBtn.classList.add('addTodo')
         addTodoBtn.innerHTML = 'Add Todo'
+        addTodoBtn.style.backgroundColor = `hsl(${project.getColor()}, 50%, 60%)`
+        addTodoBtn.style.color = `white`
         addTodoBtn.addEventListener('click', () => {
             this.addTodoPop(project.getTitle(), todoDiv)
         })
@@ -432,7 +440,7 @@ class UI {
         btnDiv.classList.add('buttonContainer')
         const blueBtn = document.createElement('button');
         blueBtn.classList.add('round')
-        blueBtn.style.backgroundColor = `hsl(200, 40%, 40%)`
+        blueBtn.style.backgroundColor = `hsl(200, 50%, 60%)`
         blueBtn.addEventListener('click', () => {
            Storage.changeProjectColor(project.title, 200)
            this.renderProject(Storage.getApp().getProject(project.title))
@@ -442,7 +450,7 @@ class UI {
 
         const redBtn = document.createElement('button')
         redBtn.classList.add('round')
-        redBtn.style.backgroundColor = `hsl(0, 40%, 40%)`
+        redBtn.style.backgroundColor = `hsl(0, 50%, 60%)`
         redBtn.addEventListener('click', () => {
             Storage.changeProjectColor(project.title, 0)
             this.renderProject(Storage.getApp().getProject(project.title))
@@ -452,7 +460,7 @@ class UI {
 
         const greenBtn = document.createElement('button')
         greenBtn.classList.add('round')
-        greenBtn.style.backgroundColor = `hsl(500, 40%, 40%)`
+        greenBtn.style.backgroundColor = `hsl(500, 50%, 60%)`
         greenBtn.addEventListener('click', () => {
             Storage.changeProjectColor(project.title, 500)
             this.renderProject(Storage.getApp().getProject(project.title))
@@ -461,7 +469,7 @@ class UI {
 
         const purpBtn = document.createElement('button')
         purpBtn.classList.add('round')
-        purpBtn.style.backgroundColor = `hsl(260, 40%, 40%)`
+        purpBtn.style.backgroundColor = `hsl(260, 50%, 60%)`
         purpBtn.addEventListener('click', () => {
             Storage.changeProjectColor(project.title, 260)
             this.renderProject(Storage.getApp().getProject(project.title))
